@@ -20,3 +20,14 @@ I frequently have to create budgets for Art/Movie projects. This normally means 
 ## How ipybudget works
 
 All calculation is hidden away from the user in the library. By using Jupyter Notebooks the user can now define the budget as a Python data structure. By implementing the different IPython formatting methods, this data will be correctly displayed as a table in the Markdown, HTML and LaTeX output. Between the definitions there is space for additional informations.
+
+
+## Currency
+
+ipybudget uses [Money Package](https://pypi.org/project/money/) throughout the library and uses Euro as the default format. This can be altered by using a optional parameter while instantiate the Budget object. Specify the currency by using the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) three-lettered code:
+
+```python
+from ipybudget import Budget
+
+budget = Budget(currency="USD")
+```
