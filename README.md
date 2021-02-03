@@ -4,7 +4,7 @@
   <img width="256" src="misc/header.png">
 </p>
 
-This project aims to provide a library for creating budgets in Python and especially with the help of [Jupyter Lab](https://jupyter.org/).
+This project aims to provide a library for creating budgets with [Jupyter Lab](https://jupyter.org/).
 
 
 ## Motivation

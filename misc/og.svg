@@ -8,13 +8,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="3128.3789"
-   height="1826.903"
-   viewBox="0 0 827.71691 483.36809"
+   width="1280"
+   height="640"
+   viewBox="0 0 338.66666 169.33334"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="header.svg"
+   sodipodi:docname="og.svg"
    inkscape:export-filename="/home/irvin/repos/ipybudget/misc/header.png"
    inkscape:export-xdpi="28.23"
    inkscape:export-ydpi="28.23">
@@ -70,7 +70,7 @@
        xlink:href="#linearGradient842"
        id="radialGradient1080"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.4184064,0.73387768,-0.62205066,1.2022581,-282.53019,-39.570497)"
+       gradientTransform="matrix(1.4184064,0.73387766,-0.62205058,1.202258,-282.53017,-46.72968)"
        cx="64.63253"
        cy="58.637238"
        fx="64.63253"
@@ -79,14 +79,14 @@
   </defs>
   <sodipodi:namedview
      id="base"
-     pagecolor="#ffffff"
+     pagecolor="#ffd369"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.12374369"
-     inkscape:cx="-512.91296"
-     inkscape:cy="26.517825"
+     inkscape:zoom="0.49497476"
+     inkscape:cx="916.78238"
+     inkscape:cy="679.47871"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -109,7 +109,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -118,6 +118,15 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(278.39178)">
+    <rect
+       style="fill:#ff9955;stroke-width:10.5833;stroke-linejoin:round;paint-order:markers stroke fill;stop-color:#000000"
+       id="rect1833"
+       width="169.33333"
+       height="169.33334"
+       x="143.43382"
+       y="142.92574"
+       rx="0"
+       ry="0" />
     <rect
        style="fill:#ffd369;fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
        id="rect1068"
@@ -176,45 +185,43 @@
        y="35.953625"
        ry="3.0226676"
        rx="3.0226679" />
-    <text
-       xml:space="preserve"
-       style="font-style:italic;font-size:157.361px;line-height:120%;font-family:'Antykwa Poltawskiego';-inkscape-font-specification:'Antykwa Poltawskiego Italic';font-feature-settings:italic;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;letter-spacing:0px;text-anchor:middle;fill:#222831;fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
-       x="132.79141"
-       y="448.59131"
-       id="text975"
-       inkscape:export-xdpi="27.618137"
-       inkscape:export-ydpi="27.618137"><tspan
-         sodipodi:role="line"
-         id="tspan973"
-         x="132.79144"
-         y="448.59131"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro Medium';fill:#222831;fill-opacity:1;stroke-width:10.5833">ipybudget</tspan></text>
-    <rect
-       style="fill:url(#radialGradient1080);fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
-       id="rect836-0"
-       width="270.93335"
-       height="270.93335"
-       x="-1.760463e-06"
-       y="-1.760463e-06"
-       ry="15.850565"
-       rx="15.850565"
-       inkscape:export-xdpi="27.618137"
-       inkscape:export-ydpi="27.618137" />
     <g
-       id="g1066"
-       style="fill:#eeeeee;fill-opacity:1;stroke-width:0.87891"
-       transform="matrix(1.1377778,0,0,1.1377778,-18.664299,-18.664299)"
-       inkscape:export-xdpi="27.618137"
-       inkscape:export-ydpi="27.618137">
+       id="g1894"
+       transform="translate(0,7.1591827)">
+      <text
+         xml:space="preserve"
+         style="font-style:italic;font-size:28.7494px;line-height:120%;font-family:'Antykwa Poltawskiego';-inkscape-font-specification:'Antykwa Poltawskiego Italic';font-feature-settings:italic;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;letter-spacing:0px;text-anchor:middle;fill:#222831;fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
+         x="-110.87287"
+         y="133.63019"
+         id="text975"
+         inkscape:export-xdpi="27.618137"
+         inkscape:export-ydpi="27.618137"><tspan
+           sodipodi:role="line"
+           id="tspan973"
+           x="-110.87287"
+           y="133.63019"
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro Semi-Bold';fill:#222831;fill-opacity:1;stroke-width:10.5833">ipybudget</tspan></text>
+      <rect
+         style="fill:url(#radialGradient1080);fill-opacity:1;stroke:none;stroke-width:10.5833;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
+         id="rect836-0"
+         width="74.059288"
+         height="74.059288"
+         x="-146.08809"
+         y="15.146162"
+         ry="4.3327322"
+         rx="4.3327322"
+         inkscape:export-xdpi="27.618137"
+         inkscape:export-ydpi="27.618137" />
       <g
          id="g1058"
-         style="fill:#eeeeee;fill-opacity:1;stroke-width:0.87891">
+         style="fill:#eeeeee;fill-opacity:1;stroke-width:3.21535"
+         transform="matrix(0.31101014,0,0,0.31101014,-151.18996,10.044298)">
         <g
            id="g1039"
            transform="matrix(0.87946276,0,0,1,13.281467,2.7920335)"
-           style="fill:#eeeeee;fill-opacity:1;stroke-width:0.937205">
+           style="fill:#eeeeee;fill-opacity:1;stroke-width:3.42861">
           <rect
-             style="fill:#eeeeee;fill-opacity:1;stroke:none;stroke-width:9.91866;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
+             style="fill:#eeeeee;fill-opacity:1;stroke:none;stroke-width:36.2858;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
              id="rect934-62"
              width="167.31775"
              height="26.458334"
@@ -224,7 +231,7 @@
              rx="5.890862" />
         </g>
         <rect
-           style="fill:#eeeeee;fill-opacity:1;stroke:none;stroke-width:9.30173;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
+           style="fill:#eeeeee;fill-opacity:1;stroke:none;stroke-width:34.0289;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
            id="rect934-62-7"
            width="100.95207"
            height="26.458334"
@@ -233,7 +240,7 @@
            ry="5.1807938"
            rx="5.1807938" />
         <rect
-           style="fill:#eeeeee;fill-opacity:1;stroke:none;stroke-width:9.30173;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
+           style="fill:#eeeeee;fill-opacity:1;stroke:none;stroke-width:34.0289;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
            id="rect934-62-9"
            width="159.47844"
            height="26.458334"
@@ -242,7 +249,7 @@
            ry="5.1807938"
            rx="5.1807942" />
         <rect
-           style="fill:#eeeeee;fill-opacity:1;stroke:none;stroke-width:9.30173;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
+           style="fill:#eeeeee;fill-opacity:1;stroke:none;stroke-width:34.0289;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill;stop-color:#000000"
            id="rect934-62-2"
            width="124.40158"
            height="26.458334"
