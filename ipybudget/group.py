@@ -2,7 +2,9 @@
 The group module contains all income/expense group related stuff.
 """
 
-from typing import Union
+from typing import List, Union
+
+from money import Money
 
 
 class Group:
@@ -13,3 +15,6 @@ class Group:
     the data for the report. Use Jupyter's Markdown blocks to further structure
     and formate the budget and adding remarks for entries.
     """
+    name: str
+    amount: Money
+    entries: List[Union[

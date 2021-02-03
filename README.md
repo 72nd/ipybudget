@@ -7,6 +7,11 @@
 This project aims to provide a library for creating budgets with [Jupyter Lab](https://jupyter.org/).
 
 
+## How ipybudget works
+
+All calculation is hidden away from the user in the library. By using Jupyter Notebooks the user can now define the budget as a Python data structure. By implementing the different IPython formatting methods, this data will be correctly displayed as a table in the Markdown, HTML and LaTeX output. Between the definitions there is space for additional informations.
+
+
 ## Motivation
 
 I frequently have to create budgets for Art/Movie projects. This normally means to fiddle around with more or less crappy spreadsheet files. This approach is not fundamentally wrong but comes in with major drawbacks:
@@ -17,17 +22,12 @@ I frequently have to create budgets for Art/Movie projects. This normally means 
 - _Additional content/remarks._ Almost always you will have to add some comprehensive remarks for some of the budget entries which simply wont fit into a spreadsheet file. Thus you'll alway have a separate text file containing the appendix around. To keep both files in sync can be quit hard and annoying.
 
 
-## How ipybudget works
-
-All calculation is hidden away from the user in the library. By using Jupyter Notebooks the user can now define the budget as a Python data structure. By implementing the different IPython formatting methods, this data will be correctly displayed as a table in the Markdown, HTML and LaTeX output. Between the definitions there is space for additional informations.
-
-
 ## Currency
 
-ipybudget uses [Money Package](https://pypi.org/project/money/) throughout the library and uses Euro as the default format. This can be altered by using a optional parameter while instantiate the Budget object. Specify the currency by using the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) three-lettered code:
+ipybudget uses [Money Package](https://pypi.org/project/money/) throughout the library and uses Euro as the default format. This can be altered by calling the `set_currency` class-method on Entry. Specify the currency by using the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) three-lettered code:
 
 ```python
-from ipybudget import Budget
+from ipybudget import Entry
 
-budget = Budget(currency="USD")
+Entry.set_currency("USD")
 ```
