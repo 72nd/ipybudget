@@ -1,6 +1,9 @@
 """
 The Budget module contains all budget class related stuff.
 """
+from ipybudget import Group
+
+from typing import List
 
 
 class Budget:
@@ -11,3 +14,4 @@ class Budget:
     advised to use the display functionality of the Groups and using Jupyter's
     markdown blocks to express the structure of the budget.
     """
+    expenses = List[Group]
