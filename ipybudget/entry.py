@@ -15,7 +15,12 @@ class Entry:
     """
     name: str
     amount: Money
-    currency = "EUR"
+    code: str = ""
+    currency: str = "EUR"
+
+    def __init__(self, name: str):
+        self.name = name
+
 
     @classmethod
     def set_currency(cls, currency: str):

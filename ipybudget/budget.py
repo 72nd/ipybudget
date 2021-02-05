@@ -1,7 +1,8 @@
 """
 The Budget module contains all budget class related stuff.
 """
-from ipybudget import Group
+from ipybudget.entry import Entry
+from ipybudget.group import Group
 
 from typing import List
 
@@ -15,3 +16,13 @@ class Budget:
     markdown blocks to express the structure of the budget.
     """
     expenses = List[Group]
+
+    @classmethod
+    def set_currency(cls, currency: str):
+        """
+        Alter the currency for all following budget elements (defaults to EUR).
+        Currencies are expressed in a three lettered code as stated in the
+        ISO 4217 standard.
+        """
+        Group.set_currency(currency)
+        Entry.set_currency(currency)
