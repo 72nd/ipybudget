@@ -47,11 +47,14 @@ class Rates(BackendBase):
         xrates.install(self)
 
     @classmethod
-    def set_currency(cls, currency: str):
+    def _set_currency(cls, currency: str):
         """
         Alter the base currency for all following budget elements (defaults to
         `EUR`). Currencies are expressed in a three lettered code as stated in
         the ISO 4217 standard.
+
+        This method shouldn't be called directly use the ipybudget.set_currency
+        method instead.
         """
         cls.__base_currency = currency
 

@@ -38,41 +38,28 @@ class Entry:
         amount: Union[str, int, Decimal],
         code: str = "",
         comment: str = "",
+        currency: str = "",
     ):
-        """Initialize a Entry instance with the default currency."""
+        """
+        Initialize a Entry instance with the default currency of the project.
+        Use the currency parameter to alter the currency for this entry.
+        """
         self.name = name
         self.amount = Money(amount, self.currency)
         self.code = code
         self.command = comment
+        if currency != "":
+            self.currency = currency
 
     @classmethod
-    def from_money(
-        cls,
-        name: str,
-        amount: Money,
-        code: str = "",
-        comment: str = "",
-    ):
-        """
-        Initializes a Entry instance with the given Money instance. This
-        is mainly used to create an Entry with a non default currency.
-        """
-        rsl = Entry(
-            name,
-            0,
-            code=code,
-            comment=comment,
-        )
-        rsl.amount = amount
-        rsl.currency = amount.currency
-        return rsl
-
-    @classmethod
-    def set_currency(cls, currency: str):
+    def _set_currency(cls, currency: str):
         """
         Alter the currency for all following entries (defaults to EUR).
         Currencies are expressed in a three lettered code as stated in the
         ISO 4217 standard.
+
+        This method shouldn't be called directly use the ipybudget.set_currency
+        method instead.
         """
         cls.currency = currency
 

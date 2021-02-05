@@ -35,7 +35,8 @@ class Group:
     """
     currency: str = DEFAULT_CURRENCY
     """
-    ISO 4217 currency code for the group. Defaults to `EUR`. Attention: Entries
+    ISO 4217 currency code for the group. Defaults to `EUR`. Can be changed by
+    calling the ipybudget.budget.Budget.set_currency method. Attention: Entries
     of the group created with ipybudget.entry.Entry.__init__ will **not**
     automatically inherit this currency.
     """
@@ -58,11 +59,14 @@ class Group:
         self.currency = currency
 
     @classmethod
-    def set_currency(cls, currency: str):
+    def _set_currency(cls, currency: str):
         """
         Alter the currency for all following entries (defaults to EUR).
         Currencies are expressed in a three lettered code as stated in the
         ISO 4217 standard.
+
+        This method shouldn't be called directly use the ipybudget.set_currency
+        method instead.
         """
         cls.currency = currency
 
