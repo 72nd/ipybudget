@@ -12,6 +12,21 @@ from money.exchange import BackendBase
 
 
 class Rates(BackendBase):
+    """
+    The Rates class handles the conversion when using multiple currencies in
+    one budget. The rates are expressed in relation to the base currency
+    (change this by using the ipybudget.budget.Budget.set_currency method).
+    As transparency is important for budgets "hard-coded" values set by the
+    user are favorable than using dynamic Internet based approaches. This class
+    implements all IPython repl methods, thus can be used to output a formatted
+    overview over the used exchange rates in Jupyter. Add currencies by using
+    the Rates.add_currency method.
+
+    The conversion is archived by implementing the BackendBase class from the
+    money package. By instantiating a new Rates instance, this will get
+    automatically registered as the default backend for *all* currency
+    calculations. 
+    """
     __base_currency: str = DEFAULT_CURRENCY
     """
     Defines the base currency which is used to express the exchange rate for
@@ -25,6 +40,10 @@ class Rates(BackendBase):
     """
 
     def __init__(self):
+        """
+        Returns a new instance of the Rates and register this as the new
+        default for currency conversion for *all* calculations.
+        """
         xrates.install(self)
 
     @classmethod
@@ -65,3 +84,16 @@ class Rates(BackendBase):
         """
         return super(Rates, self).quotation(origin, target)
 
+
+class RatesNotInstalled(Exception):
+    """
+    This class wraps the money.exceptions.ExchangeBackendNotInstalled for
+    a more understandable error. In the case of ipybudget the raise the user
+    wants to do some currency conversions without having defined the rates by
+    instantiate a Rates object.
+    """
+
+    def __init__(self):
+        msg = "you tried to use multiple currencies without defining " \
+            "the exchange rates by instantiate a Rates instance."
+        super(Exception, self).__init__(msg)

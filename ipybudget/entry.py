@@ -35,35 +35,39 @@ class Entry:
     def __init__(
         self,
         name: str,
-        amount: Money,
-        code: str = "",
-        comment: str = "",
-    ):
-        self.name = name
-        self.amount = amount
-        self.code = code
-        self.command = comment
-
-    @classmethod
-    def defaults(
-        cls,
-        name: str,
         amount: Union[str, int, Decimal],
         code: str = "",
         comment: str = "",
     ):
+        """Initialize a Entry instance with the default currency."""
+        self.name = name
+        self.amount = Money(amount, self.currency)
+        self.code = code
+        self.command = comment
+
+    @classmethod
+    def from_money(
+        cls,
+        name: str,
+        amount: Money,
+        code: str = "",
+        comment: str = "",
+    ):
         """
-        Initializes a Entry instance with the default currency. This is a
-        additional method for your convenience.
+        Initializes a Entry instance with the given Money instance. This
+        is mainly used to create an Entry with a non default currency.
         """
-        return Entry(
+        rsl = Entry(
             name,
-            Money(amount, currency=cls.currency),
+            0,
             code=code,
             comment=comment,
         )
+        rsl.amount = amount
+        rsl.currency = amount.currency
+        return rsl
 
-    @ classmethod
+    @classmethod
     def set_currency(cls, currency: str):
         """
         Alter the currency for all following entries (defaults to EUR).
@@ -71,3 +75,14 @@ class Entry:
         ISO 4217 standard.
         """
         cls.currency = currency
+
+    def amount_by_currency(self, currency: str) -> Money:
+        """
+        Returns the amount of the entry with the requested currency. If the
+        requested currency is the same as the entries currency no conversion is
+        done to omit the requirement of a registered Rates instance when only
+        one currency is used.
+        """
+        if self.currency == currency:
+            return self.amount
+        return self.amount.to(currency)

@@ -3,10 +3,12 @@ The group module contains all income/expense group related stuff.
 """
 from ipybudget import DEFAULT_CURRENCY
 from ipybudget.entry import Entry
+from ipybudget.rates import RatesNotInstalled
 
 from typing import List, Union
 
 from money import Money
+from money.exceptions import ExchangeBackendNotInstalled
 
 
 class Group:
@@ -40,6 +42,7 @@ class Group:
             items: List[Union[Entry, "Group"]],
             code: str = "",
             comment: str = "",
+            currency: str = DEFAULT_CURRENCY,
     ):
         """
         Initializes a Group instance. Needs at least a name for the group.
@@ -48,6 +51,7 @@ class Group:
         self.items = items
         self.code = code
         self.comment = comment
+        self.currency = currency
 
     @classmethod
     def set_currency(cls, currency: str):
@@ -68,10 +72,16 @@ class Group:
 
         for item in self.items:
             if isinstance(item, Entry):
-                rsl += item.amount.to(self.currency)
+                try:
+                    rsl += item.amount_by_currency(self.currency)
+                except ExchangeBackendNotInstalled:
+                    raise RatesNotInstalled
                 continue
             if isinstance(item, Group):
-                rsl += item.total().to(self.currency)
+                try:
+                    rsl += item.total().to(self.currency)
+                except ExchangeBackendNotInstalled:
+                    raise RatesNotInstalled
                 continue
             raise TypeError(
                 "Group item has to be a Entry/Group, got {} instead".format(
