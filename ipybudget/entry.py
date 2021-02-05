@@ -3,7 +3,7 @@ The entry module contains all income/expense entry related stuff.
 """
 from ipybudget import DEFAULT_CURRENCY
 
-from typing import Union
+from typing import Union, Optional
 from decimal import Decimal
 
 from money import Money
@@ -38,18 +38,18 @@ class Entry:
         amount: Union[str, int, Decimal],
         code: str = "",
         comment: str = "",
-        currency: str = "",
+        currency: Optional[str] = None,
     ):
         """
         Initialize a Entry instance with the default currency of the project.
         Use the currency parameter to alter the currency for this entry.
         """
         self.name = name
+        if currency:
+            self.currency = currency
         self.amount = Money(amount, self.currency)
         self.code = code
         self.command = comment
-        if currency != "":
-            self.currency = currency
 
     @classmethod
     def _set_currency(cls, currency: str):

@@ -47,4 +47,13 @@ class Budget:
         self.incomes = incomes
         self.__rates = rates
 
-
+    @classmethod
+    def set_currency(cls, currency: str):
+        """
+        Alter the currency for all following budget elements (defaults to EUR).
+        Currencies are expressed in a three lettered code as stated in the
+        ISO 4217 standard.
+        """
+        Group._set_currency(currency)
+        Entry._set_currency(currency)
+        Rates._set_currency(currency)

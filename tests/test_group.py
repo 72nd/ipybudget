@@ -1,6 +1,7 @@
 import unittest
 
 from ipybudget import DEFAULT_CURRENCY
+from ipybudget.budget import Budget
 from ipybudget.entry import Entry
 from ipybudget.group import Group
 from ipybudget.rates import Rates
@@ -58,7 +59,7 @@ class TestGroup(unittest.TestCase):
             "Test Group",
             [
                 Entry("Entry 1", 100),
-                Entry.from_money("Entry 2", Money(200, "USD")),
+                Entry("Entry 2", 200, currency="USD"),
             ]
         )
         self.assertEqual(group.total(), Money(200, "EUR"))
@@ -129,20 +130,25 @@ class TestGroup(unittest.TestCase):
                         Group(
                             "Sub-Sub Group",
                             [
-                                Entry.from_money(
-                                    "Sub-Sub Entry 1",
-                                    Money(100, "CHF")
-                                ),
-                                Entry.from_money(
-                                    "Sub-Sub Entry 2",
-                                    Money(200, "CHF")
-                                ),
+                                Entry("Sub-Sub Entry 1", 100, currency="CHF"),
+                                Entry("Sub-Sub Entry 2", 200, currency="CHF"),
                             ],
                             currency="CHF",
                         )
                     ]
                 ),
-                Entry.from_money("Entry 2", Money(100, "USD")),
+                Entry("Sub-Sub Entry 2", 100, currency="CHF"),
             ]
         )
-        self.assertEqual(group.total(), Money(850, "EUR"))
+        self.assertEqual(group.total(), Money(1000, "EUR"))
+
+    def test_total_with_different_base_currency(self):
+        """Tests the total with a different base currency than EUR."""
+        Budget.set_currency("USD")
+        group = Group(
+            "Test Group",
+            [
+                Entry("Entry 1", 100)
+            ]
+        )
+        self.assertEqual(group.total(), Money(100, "USD"))

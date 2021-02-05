@@ -5,7 +5,7 @@ from ipybudget import DEFAULT_CURRENCY
 from ipybudget.entry import Entry
 from ipybudget.rates import RatesNotInstalled
 
-from typing import List, Union
+from typing import List, Union, Optional
 
 from money import Money
 from money.exceptions import ExchangeBackendNotInstalled
@@ -47,7 +47,7 @@ class Group:
             items: List[Union[Entry, "Group"]],
             code: str = "",
             comment: str = "",
-            currency: str = DEFAULT_CURRENCY,
+            currency: Optional[str] = None,
     ):
         """
         Initializes a Group instance. Needs at least a name for the group.
@@ -56,7 +56,8 @@ class Group:
         self.items = items
         self.code = code
         self.comment = comment
-        self.currency = currency
+        if currency:
+            self.currency = currency
 
     @classmethod
     def _set_currency(cls, currency: str):
