@@ -68,10 +68,10 @@ class Group:
 
         for item in self.items:
             if isinstance(item, Entry):
-                rsl = item.amount + rsl
+                rsl += item.amount.to(self.currency)
                 continue
             if isinstance(item, Group):
-                rsl += item.total()
+                rsl += item.total().to(self.currency)
                 continue
             raise TypeError(
                 "Group item has to be a Entry/Group, got {} instead".format(

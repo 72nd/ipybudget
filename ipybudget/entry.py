@@ -4,8 +4,9 @@ The entry module contains all income/expense entry related stuff.
 from ipybudget import DEFAULT_CURRENCY
 
 from typing import Union
+from decimal import Decimal
 
-from money import XMoney
+from money import Money
 
 
 class Entry:
@@ -19,7 +20,7 @@ class Entry:
 
     name: str
     """Short concise name for an income/expense entry."""
-    amount: XMoney
+    amount: Money
     """Defines the amount of the entry."""
     code: str = ""
     """Optional short identifier for the entry. Defaults to an empty string."""
@@ -34,12 +35,12 @@ class Entry:
     def __init__(
         self,
         name: str,
-        amount: XMoney,
+        amount: Money,
         code: str = "",
         comment: str = "",
     ):
         self.name = name
-        self.amount = XMoney(amount, self.currency)
+        self.amount = amount
         self.code = code
         self.command = comment
 
@@ -47,7 +48,7 @@ class Entry:
     def defaults(
         cls,
         name: str,
-        amount: Union[str, int],
+        amount: Union[str, int, Decimal],
         code: str = "",
         comment: str = "",
     ):
@@ -57,7 +58,7 @@ class Entry:
         """
         return Entry(
             name,
-            XMoney(amount, cls.currency),
+            Money(amount, currency=cls.currency),
             code=code,
             comment=comment,
         )

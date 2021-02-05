@@ -4,9 +4,11 @@ is accomplished by implementing the BackendBase object of the money package.
 """
 from ipybudget import DEFAULT_CURRENCY
 
+from decimal import Decimal
 from typing import Dict, Union
 
-from money import BackendBase
+from money import xrates
+from money.exchange import BackendBase
 
 
 class Rates(BackendBase):
@@ -21,6 +23,9 @@ class Rates(BackendBase):
     Used to store additional exchange rates expressed relative to the
     base_currency. You can add a rate by using the add_rate method.
     """
+
+    def __init__(self):
+        xrates.install(self)
 
     @classmethod
     def set_currency(cls, currency: str):
@@ -38,10 +43,19 @@ class Rates(BackendBase):
         """
         self.__rates[currency] = rate
 
+    def base(self):
+        """
+        Returns the base currency. Implements the abstract method base()
+        from BackendBase.
+        """
+        return self.__base_currency
+
     def rate(self, currency):
         """
         Implements the abstract method rate() of the BackendBase.
         """
+        if currency == self.__base_currency:
+            return Decimal(1)
         return self.__rates.get(currency, None)
 
     def quotation(self, origin, target):

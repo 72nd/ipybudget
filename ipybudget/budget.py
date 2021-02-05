@@ -1,17 +1,14 @@
 """
 The Budget module contains all budget class related stuff.
 """
-from ipybudget import DEFAULT_CURRENCY
 from ipybudget.entry import Entry
 from ipybudget.group import Group
 from ipybudget.rates import Rates
 
-from typing import List, Union, Dict
-
-from money import BackendBase
+from typing import List, Union
 
 
-class Budget(BackendBase):
+class Budget:
     """
     The Budget class is the main class for every ipybudget based budget. It
     contains the different expense and income groups and provides export
@@ -33,7 +30,7 @@ class Budget(BackendBase):
     All groups and/or entries (also known as Item) which create some financial
     income for the project/company.
     """
-    rates: Rates = Rates()
+    __rates: Rates = Rates()
     """
     Contains the currency exchange rates. The functionality is outsourced from
     the budget class to offer the separate rendering of exchange rates in the
@@ -48,7 +45,7 @@ class Budget(BackendBase):
     ):
         self.expenses = expenses
         self.incomes = incomes
-        self.rates = rates
+        self.__rates = rates
 
     @classmethod
     def set_currency(cls, currency: str):
