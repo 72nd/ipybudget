@@ -1,6 +1,9 @@
 import unittest
 
+from ipybudget.entry import Entry
 from ipybudget.group import Group
+
+from money import Money
 
 
 class TestGroup(unittest.TestCase):
@@ -34,3 +37,31 @@ class TestGroup(unittest.TestCase):
         self.assertEqual(group.code, code)
         self.assertEqual(group.comment, comment)
         self.assertEqual(group.currency, currency)
+
+    def test_total_one_entry(self):
+        """Test the total method with one entries."""
+        group = Group(
+            "Test Group",
+            items=[
+                Entry("Entry 1", 100),
+                Entry("Entry 2", "23.5"),
+            ]
+        )
+        self.assertEqual(group.total(), Money("123.5", "EUR"))
+        self.assertNotEqual(group.total(), Money("123.5", "USD"))
+        self.assertNotEqual(group.total(), Money(100, "EUR"))
+
+    def test_total_one_entry_usd(self):
+        """Test the total method while changing the global currency to USD."""
+        Group.set_currency("USD")
+        group = Group(
+            "Test Group",
+            items=[
+                Entry("Entry 1", 100),
+                Entry("Entry 2", "23.5"),
+            ]
+        )
+        self.assertEqual(group.total(), Money("123.5", "USD"))
+        self.assertNotEqual(group.total(), Money("123.5", "EUR"))
+        self.assertNotEqual(group.total(), Money(100, "USD"))
+

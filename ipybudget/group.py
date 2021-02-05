@@ -1,6 +1,7 @@
 """
 The group module contains all income/expense group related stuff.
 """
+from ipybudget import DEFAULT_CURRENCY
 from ipybudget.entry import Entry
 
 from typing import List, Union
@@ -17,10 +18,12 @@ class Group:
     displaying the data for the report. Use Jupyter's Markdown blocks to
     further structure and formate the budget and adding remarks for entries.
     """
+
     name: str
     """Name of the Group."""
-    items: List[any]
-    """Optional short identifier for the group. Defaults to an empty string."""
+    items: List[Union[Entry, "Group"]]
+    """All income/expense entries of this group. Each group can also contain
+    sub-groups itself to express more complex budgets."""
     code: str = ""
     """Optional short identifier for the group. Defaults to an empty string."""
     comment: str = ""
@@ -28,16 +31,15 @@ class Group:
     short as they have the tendency to break the table layout. Use Markdown
     blocks in the Jupyter notebook instead. Defaults to an empty string.
     """
-    currency: str = "EUR"
+    currency: str = DEFAULT_CURRENCY
     """ISO 4217 currency code for the group. Defaults to `EUR`."""
 
     def __init__(
             self,
             name: str,
-            items: List[Union[Entry, "Group"]] = [],
+            items: List[Union[Entry, "Group"]],
             code: str = "",
             comment: str = "",
-            currency: str = "EUR"
     ):
         """
         Initializes a Group instance. Needs at least a name for the group.
@@ -46,7 +48,6 @@ class Group:
         self.items = items
         self.code = code
         self.comment = comment
-        self.currency = currency
 
     @classmethod
     def set_currency(cls, currency: str):
@@ -63,10 +64,11 @@ class Group:
         subgroups. The items have to be a Entry or a Group otherwise a
         exception will be thrown.
         """
-        rsl = Money
+        rsl = Money(0, self.currency)
+
         for item in self.items:
             if isinstance(item, Entry):
-                rsl += item.amount
+                rsl = item.amount + rsl
                 continue
             if isinstance(item, Group):
                 rsl += item.total()
@@ -75,3 +77,4 @@ class Group:
                 "Group item has to be a Entry/Group, got {} instead".format(
                     type(item))
             )
+        return rsl
