@@ -82,3 +82,67 @@ class TestGroup(unittest.TestCase):
         self.assertEqual(group.total(), Money("123.5", "USD"))
         self.assertNotEqual(group.total(), Money("123.5", "EUR"))
         self.assertNotEqual(group.total(), Money(100, "USD"))
+
+    def test_total_complex_group(self):
+        """
+        Tests the total function with some more complex (sub)-groups.
+        """
+        group = Group(
+            "Test Group",
+            [
+                Entry("Entry 1", 100),
+                Group(
+                    "Sub Group",
+                    [
+                        Entry("Sub Entry", 100),
+                        Group(
+                            "Sub-Sub Group",
+                            [
+                                Entry("Sub-Sub Entry 1", 100),
+                                Entry("Sub-Sub Entry 2", 300),
+                            ]
+                        )
+                    ]
+                ),
+                Entry("Entry 2", 50),
+            ]
+        )
+        self.assertEqual(group.total(), Money(650, "EUR"))
+
+    def test_total_complex_group_currencies(self):
+        """
+        Tests the total function with some more complex (sub)-groups and
+        multiple currencies.
+        """
+        rates = Rates()
+        rates.add_currency("USD", 2)
+        rates.add_currency("CHF", 0.5)
+
+        group = Group(
+            "Test Group",
+            [
+                Entry("Entry 1", 100),
+                Group(
+                    "Sub Group",
+                    [
+                        Entry("Sub Entry", 100),
+                        Group(
+                            "Sub-Sub Group",
+                            [
+                                Entry.from_money(
+                                    "Sub-Sub Entry 1",
+                                    Money(100, "CHF")
+                                ),
+                                Entry.from_money(
+                                    "Sub-Sub Entry 2",
+                                    Money(200, "CHF")
+                                ),
+                            ],
+                            currency="CHF",
+                        )
+                    ]
+                ),
+                Entry.from_money("Entry 2", Money(100, "USD")),
+            ]
+        )
+        self.assertEqual(group.total(), Money(850, "EUR"))

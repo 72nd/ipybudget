@@ -34,7 +34,11 @@ class Group:
     blocks in the Jupyter notebook instead. Defaults to an empty string.
     """
     currency: str = DEFAULT_CURRENCY
-    """ISO 4217 currency code for the group. Defaults to `EUR`."""
+    """
+    ISO 4217 currency code for the group. Defaults to `EUR`. Attention: Entries
+    of the group created with ipybudget.entry.Entry.__init__ will **not**
+    automatically inherit this currency.
+    """
 
     def __init__(
             self,

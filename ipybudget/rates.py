@@ -5,7 +5,7 @@ is accomplished by implementing the BackendBase object of the money package.
 from ipybudget import DEFAULT_CURRENCY
 
 from decimal import Decimal
-from typing import Dict, Union
+from typing import Dict
 
 from money import xrates
 from money.exchange import BackendBase
@@ -25,7 +25,7 @@ class Rates(BackendBase):
     The conversion is archived by implementing the BackendBase class from the
     money package. By instantiating a new Rates instance, this will get
     automatically registered as the default backend for *all* currency
-    calculations. 
+    calculations.
     """
     __base_currency: str = DEFAULT_CURRENCY
     """
@@ -33,7 +33,7 @@ class Rates(BackendBase):
     additional currencies relative to this base. Using the set_currency method
     will also adjust the base currency. Defaults `EUR`.
     """
-    __rates: Dict[str, Union[int, float]] = {}
+    __rates: Dict[str, Decimal] = {}
     """
     Used to store additional exchange rates expressed relative to the
     base_currency. You can add a rate by using the add_rate method.
@@ -55,12 +55,12 @@ class Rates(BackendBase):
         """
         cls.__base_currency = currency
 
-    def add_currency(self, currency: str, rate: Union[int, float]):
+    def add_currency(self, currency: str, rate: Decimal):
         """
         Add an additional currency with a given name (following the ISO 4217
         standard) and a exchange rate relative to the base currency.
         """
-        self.__rates[currency] = rate
+        self.__rates[currency] = Decimal(rate)
 
     def base(self):
         """
