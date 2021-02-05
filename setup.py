@@ -8,5 +8,6 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=[
         "money==1.3.0",
+        "vdom==0.6",
     ],
 )

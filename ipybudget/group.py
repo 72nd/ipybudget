@@ -9,6 +9,7 @@ from typing import List, Union, Optional
 
 from money import Money
 from money.exceptions import ExchangeBackendNotInstalled
+from vdom import helpers as v
 
 
 class Group:
@@ -97,3 +98,31 @@ class Group:
                     type(item))
             )
         return rsl
+
+    def _repr_html_(self):
+        """Output for the Jupyter notebook."""
+        layout = v.table(
+            v.tr(
+                v.th("Pos.", style={"text-align": "right"}),
+                v.th("Bezeichnung", style={"text-align": "left"}),
+                v.th("Betrag", style={"text-align": "right"}),
+                v.th("Anmerkung", style={"text-align": "left"})
+            ),
+            v.tr(
+                v.td(v.b(self.code), style={"text-align": "right"}),
+                v.td(v.b(self.name), style={"text-align": "left"}),
+                v.td(),
+                v.td(),
+            ),
+            *[x.vdom() for x in self.items],
+            v.tr(
+                v.td(),
+                v.td(v.b(
+                    "Total {}".format(self.name)),
+                    style={"text-align": "left"}
+                ),
+                v.td(v.b(str(self.total())), style={"text-align": "right"}),
+                v.td(),
+            )
+        )
+        return layout.to_html()

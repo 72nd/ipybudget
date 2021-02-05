@@ -7,6 +7,7 @@ from typing import Union, Optional
 from decimal import Decimal
 
 from money import Money
+from vdom import helpers as v
 
 
 class Entry:
@@ -49,7 +50,7 @@ class Entry:
             self.currency = currency
         self.amount = Money(amount, self.currency)
         self.code = code
-        self.command = comment
+        self.comment = comment
 
     @classmethod
     def _set_currency(cls, currency: str):
@@ -73,3 +74,11 @@ class Entry:
         if self.currency == currency:
             return self.amount
         return self.amount.to(currency)
+
+    def vdom(self):
+        return v.tr(
+            v.td(self.code, style={"text-align": "right"}),
+            v.td(self.name, style={"text-align": "left"}),
+            v.td(str(self.amount), style={"text-align": "right"}),
+            v.td(self.comment, style={"text-align": "left"}),
+        )
