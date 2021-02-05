@@ -131,7 +131,7 @@ class TestGroup(unittest.TestCase):
                             "Sub-Sub Group",
                             [
                                 Entry("Sub-Sub Entry 1", 100, currency="CHF"),
-                                Entry("Sub-Sub Entry 2", 200, currency="CHF"),
+                                Entry("Sub-Sub Entry 2", 200, currency="USD"),
                             ],
                             currency="CHF",
                         )
@@ -152,3 +152,36 @@ class TestGroup(unittest.TestCase):
             ]
         )
         self.assertEqual(group.total(), Money(100, "USD"))
+
+    def test_total_complex_group_currencies_different_base_currency(self):
+        """
+        Tests the total function with some more complex (sub)-groups and
+        multiple currencies.
+        """
+        Budget.set_currency("USD")
+        rates = Rates()
+        rates.add_currency("EUR", 2)
+        rates.add_currency("CHF", 0.5)
+
+        group = Group(
+            "Test Group",
+            [
+                Entry("Entry 1", 100),
+                Group(
+                    "Sub Group",
+                    [
+                        Entry("Sub Entry", 100),
+                        Group(
+                            "Sub-Sub Group",
+                            [
+                                Entry("Sub-Sub Entry 1", 100, currency="CHF"),
+                                Entry("Sub-Sub Entry 2", 200, currency="CHF"),
+                            ],
+                            currency="CHF",
+                        )
+                    ]
+                ),
+                Entry("Sub-Sub Entry 2", 100, currency="EUR"),
+            ]
+        )
+        self.assertEqual(group.total(), Money(1000, "USD"))
