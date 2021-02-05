@@ -12,6 +12,9 @@ from money import Money
 class TestGroup(unittest.TestCase):
     """Tests for the ipybudget Group class."""
 
+    def tearDown(self):
+        Budget.set_currency(DEFAULT_CURRENCY)
+
     def test_default_init(self):
         """Test the default values for a Group instance."""
         group = Group("Set Design", [])
@@ -62,7 +65,8 @@ class TestGroup(unittest.TestCase):
                 Entry("Entry 2", 200, currency="USD"),
             ]
         )
-        self.assertEqual(group.total(), Money(200, "EUR"))
+        rsl = group.total()
+        self.assertEqual(rsl, Money(200, "EUR"))
         self.assertNotEqual(group.total(), Money(300, "EUR"))
         self.assertNotEqual(group.total(), Money(200, "USD"))
         self.assertNotEqual(group.total(), Money(300, "USD"))
@@ -140,7 +144,7 @@ class TestGroup(unittest.TestCase):
                 Entry("Sub-Sub Entry 2", 100, currency="CHF"),
             ]
         )
-        self.assertEqual(group.total(), Money(1000, "EUR"))
+        self.assertEqual(group.total(), Money(700, "EUR"))
 
     def test_total_with_different_base_currency(self):
         """Tests the total with a different base currency than EUR."""
@@ -184,4 +188,4 @@ class TestGroup(unittest.TestCase):
                 Entry("Sub-Sub Entry 2", 100, currency="EUR"),
             ]
         )
-        self.assertEqual(group.total(), Money(1000, "USD"))
+        self.assertEqual(group.total(), Money(850, "USD"))
