@@ -11,6 +11,8 @@ This project aims to provide a library for creating budgets with [Jupyter Lab](h
 
 All calculation is hidden away from the user in the library. By using Jupyter Notebooks the user can now define the budget as a Python data structure. By implementing the different IPython formatting methods, this data will be correctly displayed as a table in the Markdown, HTML and LaTeX output. Between the definitions there is space for additional informations.
 
+![Example Screen](misc/screen-01.png)
+
 
 ## Motivation
 
