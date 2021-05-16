@@ -9,6 +9,8 @@ from typing import List, Union, Optional
 
 from money import Money
 from money.exceptions import ExchangeBackendNotInstalled
+from pytablewriter import MarkdownTableWriter
+from pytablewriter.style import Style as TableStyle
 from vdom import helpers as v
 
 
@@ -136,7 +138,7 @@ class Group:
                 rsl.append(v.tr(v.td(), v.td(), v.td(), v.td()))
                 rsl += self._from_entry(item)._vdom(False)
             else:
-                # Render Group or Entry
+                # Render Group or Entry.
                 rsl += item._vdom(False)
 
         if not is_supergroup:
@@ -157,6 +159,38 @@ class Group:
 
         return rsl
 
+    def _row_values(self, is_supergroup: bool) -> List[List[str]]:
+        rsl = []
+        if not is_supergroup:
+            rsl.append([
+                f"**{self.code}**",
+                f"**{self.name}**",
+                "",
+                "",
+            ])
+
+        for item in self.items:
+            # Blank line before new group.
+            if isinstance(item, Group) and not is_supergroup:
+                rsl.append(["", "", "", ""])
+            if isinstance(item, Entry) and is_supergroup:
+                # Render single entry in a super-group.
+                rsl.append(["", "", "", ""])
+                rsl += self._from_entry(item)._row_values(False)
+            else:
+                # Render Group or Entry.
+                rsl += item._row_values(False)
+
+        if not is_supergroup:
+            rsl.append([
+                "",
+                f"**Total {self.name}**",
+                "**{}**".format(str(self.total())),
+                "",
+            ])
+
+        return rsl
+
     def __contains_groups(self) -> bool:
         """Returns true when the Group contains one or more sub-groups."""
         for entry in self.items:
@@ -165,7 +199,7 @@ class Group:
         return False
 
     def test(self):
-        return self._vdom()
+        return "lalal"
 
     def _repr_html_(self):
         """Output for the Jupyter notebook."""
@@ -199,6 +233,37 @@ class Group:
         )
         return layout.to_html()
 
-    def _repr_markdown(self):
+    def _repr_markdown_(self):
         """Outuput for Markdown."""
-        return "Hoi"
+        is_supergroup = self.__contains_groups()
+
+        rsl = []
+        rsl += self._row_values(is_supergroup)
+
+        if is_supergroup:
+            total = str(self.total())
+            rsl.append(["", "", "", ""])
+            rsl.append([
+                "",
+                f"**_Total {self.name}_**",
+                f"**_{total}_**",
+                "",
+            ])
+
+        writer = MarkdownTableWriter(
+            headers=[
+                "Pos.",
+                "Bezeichnung",
+                "Betrag",
+                "Anmerkung",
+            ],
+            column_styles=[
+                TableStyle(align="right"),
+                TableStyle(align="left"),
+                TableStyle(align="right"),
+                TableStyle(align="left"),
+            ],
+            value_matrix=rsl,
+            margin=1,
+        )
+        return writer.dumps()

@@ -3,7 +3,7 @@ The entry module contains all income/expense entry related stuff.
 """
 from ipybudget import DEFAULT_CURRENCY
 
-from typing import Union, Optional
+from typing import List, Union, Optional
 from decimal import Decimal
 
 from money import Money
@@ -84,3 +84,12 @@ class Entry:
                 v.td(self.comment, style={"text-align": "left"}),
             )
         ]
+
+    def _row_values(self, is_supergroup: bool) -> List[List[str]]:
+        """Returns the data rows for the md rendering."""
+        return [[
+            self.code,
+            self.name,
+            str(self.amount),
+            self.comment,
+        ]]
