@@ -61,6 +61,22 @@ class Group:
             self.currency = currency
 
     @classmethod
+    def _from_entry(cls, entry: Entry) -> "Group":
+        """
+        Generates a Group from a single Entry. Used for rendering Groups
+        containing sub-Groups and single items at the same time.
+        """
+        code = entry.code
+        entry.code = ""
+        return cls(
+            entry.name,
+            [entry],
+            code=code,
+            comment="",
+            currency=entry.currency,
+        )
+
+    @classmethod
     def _set_currency(cls, currency: str):
         """
         Alter the currency for all following entries (defaults to EUR).
@@ -99,30 +115,90 @@ class Group:
             )
         return rsl
 
+    def _vdom(self, is_supergroup: bool):
+        rsl = []
+        if not is_supergroup:
+            rsl.append(
+                v.tr(
+                    v.td(v.b(self.code), style={"text-align": "right"}),
+                    v.td(v.b(self.name), style={"text-align": "left"}),
+                    v.td(),
+                    v.td(),
+                ),
+            )
+
+        for item in self.items:
+            # Blank line before new group.
+            if isinstance(item, Group) and not is_supergroup:
+                rsl.append(v.tr(v.td(), v.td(), v.td(), v.td()))
+            if isinstance(item, Entry) and is_supergroup:
+                # Render single entry in super-group.
+                rsl.append(v.tr(v.td(), v.td(), v.td(), v.td()))
+                rsl += self._from_entry(item)._vdom(False)
+            else:
+                # Render Group or Entry
+                rsl += item._vdom(False)
+
+        if not is_supergroup:
+            rsl.append(
+                v.tr(
+                    v.td(),
+                    v.td(v.b(
+                        "Total {}".format(self.name)),
+                        style={"text-align": "left"}
+                    ),
+                    v.td(
+                        v.b(str(self.total())),
+                        style={"text-align": "right"}
+                    ),
+                    v.td(),
+                )
+            )
+
+        return rsl
+
+    def __contains_groups(self) -> bool:
+        """Returns true when the Group contains one or more sub-groups."""
+        for entry in self.items:
+            if isinstance(entry, Group):
+                return True
+        return False
+
+    def test(self):
+        return self._vdom()
+
     def _repr_html_(self):
         """Output for the Jupyter notebook."""
-        layout = v.table(
+        is_supergroup = self.__contains_groups()
+
+        rsl = []
+        rsl.append(
             v.tr(
                 v.th("Pos.", style={"text-align": "right"}),
                 v.th("Bezeichnung", style={"text-align": "left"}),
                 v.th("Betrag", style={"text-align": "right"}),
                 v.th("Anmerkung", style={"text-align": "left"})
             ),
-            v.tr(
-                v.td(v.b(self.code), style={"text-align": "right"}),
-                v.td(v.b(self.name), style={"text-align": "left"}),
-                v.td(),
-                v.td(),
-            ),
-            *[x.vdom() for x in self.items],
-            v.tr(
-                v.td(),
-                v.td(v.b(
-                    "Total {}".format(self.name)),
-                    style={"text-align": "left"}
+        )
+        rsl += self._vdom(is_supergroup)
+        if is_supergroup:
+            rsl.append(v.tr(v.td(), v.td(), v.td(), v.td()))
+            rsl.append(
+                v.tr(
+                    v.td(),
+                    v.td(v.u(v.b(f"Total {self.name}"))),
+                    v.td(v.u(v.b(
+                        str(self.total())),
+                        style={"text-align": "right"},
+                    )),
+                    v.td(),
                 ),
-                v.td(v.b(str(self.total())), style={"text-align": "right"}),
-                v.td(),
             )
+        layout = v.table(
+            *rsl,
         )
         return layout.to_html()
+
+    def _repr_markdown(self):
+        """Outuput for Markdown."""
+        return "Hoi"

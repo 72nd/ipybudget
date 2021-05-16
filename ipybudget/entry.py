@@ -75,10 +75,12 @@ class Entry:
             return self.amount
         return self.amount.to(currency)
 
-    def vdom(self):
-        return v.tr(
-            v.td(self.code, style={"text-align": "right"}),
-            v.td(self.name, style={"text-align": "left"}),
-            v.td(str(self.amount), style={"text-align": "right"}),
-            v.td(self.comment, style={"text-align": "left"}),
-        )
+    def _vdom(self, is_supergroup: bool):
+        return [
+            v.tr(
+                v.td(self.code, style={"text-align": "right"}),
+                v.td(self.name, style={"text-align": "left"}),
+                v.td(str(self.amount), style={"text-align": "right"}),
+                v.td(self.comment, style={"text-align": "left"}),
+            )
+        ]
